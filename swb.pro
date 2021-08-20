@@ -1,4 +1,4 @@
-QT       += core gui sql
+QT       += core gui sql network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,11 +12,13 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mysql_op.cpp \
+    proceed_image.cpp \
     statusbar_op.cpp
 
 HEADERS += \
     mainwindow.h \
     mysql_op.h \
+    proceed_image.h \
     statusbar_op.h
 
 FORMS += \

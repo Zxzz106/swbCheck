@@ -10,6 +10,18 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>生物宝查询</string>
   </property>
@@ -20,7 +32,7 @@
       <x>0</x>
       <y>0</y>
       <width>800</width>
-      <height>575</height>
+      <height>585</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -45,7 +57,7 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="S_InputUID">
        <property name="geometry">
         <rect>
          <x>110</x>
@@ -80,7 +92,7 @@
         <string>请输入UID：</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="S_Check">
        <property name="geometry">
         <rect>
          <x>180</x>
@@ -130,7 +142,7 @@
         <string>题目</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="S_CopyStem">
        <property name="geometry">
         <rect>
          <x>5</x>
@@ -143,7 +155,7 @@
         <string>复制题干</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="S_CopyChoice">
        <property name="geometry">
         <rect>
          <x>100</x>
@@ -156,7 +168,7 @@
         <string>复制选项</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="S_CopyBoth">
        <property name="geometry">
         <rect>
          <x>195</x>
@@ -169,7 +181,7 @@
         <string>复制整道题</string>
        </property>
       </widget>
-      <widget class="QTextBrowser" name="textBrowser">
+      <widget class="QTextBrowser" name="S_Question">
        <property name="geometry">
         <rect>
          <x>5</x>
@@ -192,6 +204,9 @@
        </property>
        <property name="frameShadow">
         <enum>QFrame::Plain</enum>
+       </property>
+       <property name="openExternalLinks">
+        <bool>true</bool>
        </property>
       </widget>
      </widget>
@@ -231,13 +246,13 @@
         <string>解析</string>
        </property>
       </widget>
-      <widget class="QTextBrowser" name="textBrowser_2">
+      <widget class="QTextBrowser" name="S_Analysis">
        <property name="geometry">
         <rect>
          <x>5</x>
          <y>30</y>
          <width>420</width>
-         <height>465</height>
+         <height>470</height>
         </rect>
        </property>
        <property name="font">
@@ -253,14 +268,17 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="openExternalLinks">
+        <bool>true</bool>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_5">
+      <widget class="QPushButton" name="S_PrintPreview">
        <property name="geometry">
         <rect>
          <x>325</x>
-         <y>500</y>
+         <y>505</y>
          <width>100</width>
          <height>30</height>
         </rect>
@@ -269,11 +287,11 @@
         <string>打印预览</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_6">
+      <widget class="QPushButton" name="S_CopyAnalysis">
        <property name="geometry">
         <rect>
          <x>240</x>
-         <y>500</y>
+         <y>505</y>
          <width>80</width>
          <height>30</height>
         </rect>
@@ -282,11 +300,11 @@
         <string>复制</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_8">
+      <widget class="QPushButton" name="S_PlayVideo">
        <property name="geometry">
         <rect>
          <x>5</x>
-         <y>500</y>
+         <y>505</y>
          <width>90</width>
          <height>30</height>
         </rect>
@@ -337,7 +355,7 @@
         <string>在此处输入UID：</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_7">
+      <widget class="QPushButton" name="M_Search">
        <property name="geometry">
         <rect>
          <x>195</x>
@@ -350,7 +368,7 @@
         <string>获取(F5)</string>
        </property>
       </widget>
-      <widget class="QPlainTextEdit" name="plainTextEdit">
+      <widget class="QPlainTextEdit" name="M_InputUID">
        <property name="geometry">
         <rect>
          <x>5</x>
@@ -368,8 +386,17 @@
        <property name="styleSheet">
         <string notr="true">background-color: rgb(252, 252, 252);</string>
        </property>
+       <property name="frameShape">
+        <enum>QFrame::Box</enum>
+       </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
+       <property name="midLineWidth">
+        <number>0</number>
+       </property>
       </widget>
-      <widget class="QCheckBox" name="checkBox">
+      <widget class="QCheckBox" name="checkBox_Stem">
        <property name="geometry">
         <rect>
          <x>5</x>
@@ -379,13 +406,13 @@
         </rect>
        </property>
        <property name="text">
-        <string>题目</string>
+        <string>题干</string>
        </property>
        <property name="checked">
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QCheckBox" name="checkBox_2">
+      <widget class="QCheckBox" name="checkBox_Choice">
        <property name="geometry">
         <rect>
          <x>5</x>
@@ -401,7 +428,7 @@
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QCheckBox" name="checkBox_3">
+      <widget class="QCheckBox" name="checkBox_Analysis">
        <property name="geometry">
         <rect>
          <x>70</x>
@@ -417,7 +444,7 @@
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QCheckBox" name="checkBox_4">
+      <widget class="QCheckBox" name="checkBox_Image">
        <property name="geometry">
         <rect>
          <x>70</x>
@@ -427,7 +454,10 @@
         </rect>
        </property>
        <property name="text">
-        <string>(解析)图片</string>
+        <string>去掉图片</string>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
        </property>
       </widget>
      </widget>
@@ -451,7 +481,7 @@
         <rect>
          <x>5</x>
          <y>5</y>
-         <width>40</width>
+         <width>80</width>
          <height>20</height>
         </rect>
        </property>
@@ -464,35 +494,10 @@
         </font>
        </property>
        <property name="text">
-        <string>解析</string>
+        <string>查询结果</string>
        </property>
       </widget>
-      <widget class="QTextBrowser" name="textBrowser_3">
-       <property name="geometry">
-        <rect>
-         <x>5</x>
-         <y>30</y>
-         <width>420</width>
-         <height>465</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>新宋体</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(249, 249, 249)</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_9">
+      <widget class="QPushButton" name="M_Copy">
        <property name="geometry">
         <rect>
          <x>240</x>
@@ -505,7 +510,7 @@
         <string>复制</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_19">
+      <widget class="QPushButton" name="M_PrintPreview">
        <property name="geometry">
         <rect>
          <x>325</x>
@@ -518,6 +523,23 @@
         <string>打印预览</string>
        </property>
       </widget>
+      <widget class="QTextBrowser" name="M_Analysis">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>30</y>
+         <width>420</width>
+         <height>465</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(249,249,249);
+border-width: 0px</string>
+       </property>
+       <property name="openExternalLinks">
+        <bool>true</bool>
+       </property>
+      </widget>
      </widget>
     </widget>
    </widget>
@@ -528,6 +550,27 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>S_InputUID</tabstop>
+  <tabstop>S_Check</tabstop>
+  <tabstop>S_Question</tabstop>
+  <tabstop>S_CopyStem</tabstop>
+  <tabstop>S_CopyChoice</tabstop>
+  <tabstop>S_CopyBoth</tabstop>
+  <tabstop>S_Analysis</tabstop>
+  <tabstop>S_PlayVideo</tabstop>
+  <tabstop>S_CopyAnalysis</tabstop>
+  <tabstop>S_PrintPreview</tabstop>
+  <tabstop>M_InputUID</tabstop>
+  <tabstop>checkBox_Stem</tabstop>
+  <tabstop>checkBox_Choice</tabstop>
+  <tabstop>checkBox_Analysis</tabstop>
+  <tabstop>checkBox_Image</tabstop>
+  <tabstop>M_Search</tabstop>
+  <tabstop>M_Copy</tabstop>
+  <tabstop>M_PrintPreview</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

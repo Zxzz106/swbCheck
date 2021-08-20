@@ -6,7 +6,7 @@
 #include <QMenuBar>
 #include <QAction>
 #include <QToolBar>
-
+#include "mainwindow.h"
 class StatusBar_OP
 {
 private:
@@ -14,7 +14,7 @@ private:
     QLabel *StatusBarMessage;
 public:
     StatusBar_OP();
-    void Send();
+    void Send(QString,MainWindow&);
 };
 
 #endif // STATUSBAR_OP_H

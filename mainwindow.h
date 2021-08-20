@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,7 +15,12 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
+    void SendStatusBar(QLabel*);
+    void SetS_Question(QString);
+    void SetS_Analysis(QString);
+    void SetM_Analysis(QString);
+    void test(QString);
+    void test();
 private:
     Ui::MainWindow *ui;
 };

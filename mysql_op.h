@@ -15,10 +15,11 @@ private:
     QString AquireChoices();
     QString AquireAnalysis_NoImg();
     QString AquireAnalysis();
+    QString AquireVideo();
 public:
     MYSQL_OP();
     void Connect();
-    void Aquire(int, int);
+    QString Aquire(int, int);
 };
 
 #endif // MYSQL_OP_H
