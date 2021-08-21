@@ -38,7 +38,7 @@ QString Proceed_Image::Proceed_WithImage(QString ostr, int width) {
         }
         if(ostr[i]=='>'&&b==1) {
             GetFile(url);
-            str+=QString("<br/><img src=\"")+File[ptr].fileName()+QString("\" alt=\"\" width="+QString::number(width-10)+" />");
+            str+=QString("<br/><img src=\"")+File[ptr].fileName()+QString("\" alt=\"\" width="+QString::number(width-20)+" />");
             ptr++;
             b=0;
             continue;
@@ -73,7 +73,6 @@ QString Proceed_Image::Proceed_NoImage(QString ostr) {
 }
 
 QString Proceed_Image::Proceed(QString ostr, int type, int width=0) {
-    qDebug()<<type;
-    if(type&8) return Proceed_NoImage(ostr)+"<br/>";
-    else return Proceed_WithImage(ostr,width)+"<br/>";
+    if(type&8) return Proceed_NoImage(ostr);
+    else return Proceed_WithImage(ostr,width);
 }

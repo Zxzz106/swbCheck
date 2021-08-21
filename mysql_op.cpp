@@ -38,30 +38,40 @@ RETRY:;
         return;
     }
 }
+bool MYSQL_OP::Exists() {
+    QSqlQuery Query(QString("SELECT UID FROM swb WHERE UID = ")+QString::number(UID),db);
+    Query.next();
+    return Query.isValid();
+}
 QString MYSQL_OP::AquireStem() {
     QSqlQuery Query(QString("SELECT stem FROM swb WHERE UID = ")+QString::number(UID)+QString(";"),db);
     Query.next();
+//    qDebug()<<"AquireStem";
     return Query.value("stem").toString()+"<br/>";
 }
 QString MYSQL_OP::AquireChoices() {
     QSqlQuery Query(QString("SELECT answers FROM swb WHERE UID = ")+QString::number(UID),db);
     Query.next();
-    return Query.value("answers").toString()+"<br/>";
+//    qDebug()<<"AquireChoices";
+    return Query.value("answers").toString();
 }
 QString MYSQL_OP::AquireAnalysis() {
     QSqlQuery Query(QString("SELECT analysis FROM swb WHERE UID = ")+QString::number(UID),db);
     Query.next();
+//    qDebug()<<"AquireAnalysis";
     return Query.value("analysis").toString()+"<br/>";
 }
 QString MYSQL_OP::AquireVideo() {
-    QSqlQuery Query(QString("SELECT analysis FROM swb WHERE UID = ")+QString::number(UID),db);
+    QSqlQuery Query(QString("SELECT videoUrl FROM swb WHERE UID = ")+QString::number(UID),db);
     Query.next();
+//    qDebug()<<"AquireVideo";
+//    qDebug()<<Query.value("videoUrl").toString();
     return Query.value("videoUrl").toString();
 }
 QString MYSQL_OP::Aquire(int ID, int type) {
     UID=ID;
-//    QString Res="("+QString::number(UID)+")<br/>";
     QString Res;
+    if(!Exists()) return "无数据";
     if(type&1) Res+=AquireStem();
     if(type&2) Res+=AquireChoices();
     if(type&4) Res+=AquireAnalysis();

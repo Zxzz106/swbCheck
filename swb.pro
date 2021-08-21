@@ -12,14 +12,12 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mysql_op.cpp \
-    proceed_image.cpp \
-    statusbar_op.cpp
+    proceed_image.cpp
 
 HEADERS += \
     mainwindow.h \
     mysql_op.h \
-    proceed_image.h \
-    statusbar_op.h
+    proceed_image.h
 
 FORMS += \
     mainwindow.ui

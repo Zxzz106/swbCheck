@@ -36,7 +36,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -355,7 +355,7 @@
         <string>在此处输入UID：</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="M_Search">
+      <widget class="QPushButton" name="M_Check">
        <property name="geometry">
         <rect>
          <x>195</x>
@@ -573,7 +573,7 @@ border-width: 0px</string>
   <tabstop>checkBox_Choice</tabstop>
   <tabstop>checkBox_Analysis</tabstop>
   <tabstop>checkBox_Image</tabstop>
-  <tabstop>M_Search</tabstop>
+  <tabstop>M_Check</tabstop>
   <tabstop>M_Copy</tabstop>
   <tabstop>M_PrintPreview</tabstop>
  </tabstops>
