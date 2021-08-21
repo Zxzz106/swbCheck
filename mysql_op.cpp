@@ -48,11 +48,6 @@ QString MYSQL_OP::AquireChoices() {
     Query.next();
     return Query.value("answers").toString()+"<br/>";
 }
-QString MYSQL_OP::AquireAnalysis_NoImg() {
-    QSqlQuery Query(QString("SELECT analysis_noimg FROM swb WHERE UID = ")+QString::number(UID),db);
-    Query.next();
-    return Query.value("analysis_noimg").toString()+"<br/>";
-}
 QString MYSQL_OP::AquireAnalysis() {
     QSqlQuery Query(QString("SELECT analysis FROM swb WHERE UID = ")+QString::number(UID),db);
     Query.next();
@@ -67,23 +62,8 @@ QString MYSQL_OP::Aquire(int ID, int type) {
     UID=ID;
 //    QString Res="("+QString::number(UID)+")<br/>";
     QString Res;
-    switch (type) {
-    case 1:{Res+=AquireStem(); break;}
-    case 2:{Res+=AquireChoices(); break;}
-    case 3:{Res+=AquireStem()+AquireChoices(); break;}
-//    case 4:{Res+=AquireAnalysis_NoImg(); break;}
-//    case 5:{Res+=AquireStem()+AquireAnalysis_NoImg(); break;}
-//    case 6:{Res+=AquireChoices()+AquireAnalysis_NoImg(); break;}
-//    case 7:{Res+=AquireStem()+AquireChoices()+AquireAnalysis_NoImg(); break;}
-    case 8:{Res+=AquireAnalysis(); break;}
-    case 9:{Res+=AquireStem()+AquireAnalysis(); break;}
-    case 10:{Res+=AquireChoices()+AquireAnalysis(); break;}
-    case 11:{Res+=AquireStem()+AquireChoices()+AquireAnalysis(); break;}
-    case 12:{Res+=AquireAnalysis(); break;}
-    case 13:{Res+=AquireStem()+AquireAnalysis(); break;}
-    case 14:{Res+=AquireChoices()+AquireAnalysis(); break;}
-    case 15:{Res+=AquireStem()+AquireChoices()+AquireAnalysis(); break;}
-    default:{assert(0); break;}
-    }
+    if(type&1) Res+=AquireStem();
+    if(type&2) Res+=AquireChoices();
+    if(type&4) Res+=AquireAnalysis();
     return Res;
 }

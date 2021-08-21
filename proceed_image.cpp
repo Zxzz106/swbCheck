@@ -9,7 +9,7 @@ void Proceed_Image::Request(QUrl* URL) {
     QTimer timer;
     QEventLoop eventloop;
     connect(&timer, &QTimer::timeout, [&eventloop] {eventloop.quit();});
-    connect(NAM, &QNetworkAccessManager::finished, [&eventloop](QNetworkReply*){eventloop.quit();});
+    connect(NAM, &QNetworkAccessManager::finished, [&eventloop](){eventloop.quit();});
     QNetworkReply* Reply=NAM->get(QNetworkRequest(*URL));
     timer.start(3000);
     eventloop.exec();
@@ -27,7 +27,7 @@ void Proceed_Image::GetFile(QString url) {
     Request(new QUrl(url));
 }
 
-QString Proceed_Image::Proceed(QString ostr) {
+QString Proceed_Image::Proceed_WithImage(QString ostr, int width) {
     str.clear();
     bool b=0;
     for(int i=0; i<ostr.length(); i++) {
@@ -38,7 +38,7 @@ QString Proceed_Image::Proceed(QString ostr) {
         }
         if(ostr[i]=='>'&&b==1) {
             GetFile(url);
-            str+=QString("<br/><img src=\"")+File[ptr].fileName()+QString("\" alt=\"\" width=400 />");
+            str+=QString("<br/><img src=\"")+File[ptr].fileName()+QString("\" alt=\"\" width="+QString::number(width-10)+" />");
             ptr++;
             b=0;
             continue;
@@ -49,7 +49,6 @@ QString Proceed_Image::Proceed(QString ostr) {
             str+=ostr[i];
         }
     }
-    qDebug()<<str;
     return str;
 }
 
@@ -71,4 +70,10 @@ QString Proceed_Image::Proceed_NoImage(QString ostr) {
         }
     }
     return str;
+}
+
+QString Proceed_Image::Proceed(QString ostr, int type, int width=0) {
+    qDebug()<<type;
+    if(type&8) return Proceed_NoImage(ostr)+"<br/>";
+    else return Proceed_WithImage(ostr,width)+"<br/>";
 }

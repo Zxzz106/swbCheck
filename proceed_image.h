@@ -22,8 +22,9 @@ private:
     void Request(QUrl*);
 public:
     Proceed_Image();
-    QString Proceed(QString);
+    QString Proceed_WithImage(QString, int);
     QString Proceed_NoImage(QString);
+    QString Proceed(QString, int, int);
 private slots:
 //    void Save(QNetworkReply *);
 };

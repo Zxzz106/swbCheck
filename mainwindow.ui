@@ -36,7 +36,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -457,7 +457,7 @@
         <string>去掉图片</string>
        </property>
        <property name="checkable">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
       </widget>
      </widget>
@@ -531,6 +531,12 @@
          <width>420</width>
          <height>465</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>新宋体</family>
+         <pointsize>11</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(249,249,249);

@@ -16,12 +16,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void SendStatusBar(QLabel*);
-    void SetS_Question(QString);
-    void SetS_Analysis(QString);
-    void SetM_Analysis(QString);
-    void test(QString);
-    void test();
+    void SetS_Question(const QString&);
+    void SetS_Analysis(const QString&);
+    void SetM_Analysis(const QString&);
+    void ClearM();
 private:
     Ui::MainWindow *ui;
+private slots:
+    void CheckS();
+    void CheckM();
 };
 #endif // MAINWINDOW_H

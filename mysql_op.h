@@ -14,7 +14,6 @@ private:
     int UID;
     QString AquireStem();
     QString AquireChoices();
-    QString AquireAnalysis_NoImg();
     QString AquireAnalysis();
     QString AquireVideo();
 public:
