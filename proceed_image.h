@@ -5,19 +5,27 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QPixmap>
+#include <QAction>
+#include <QDialog>
+#include <QEventLoop>
+#include <QTimer>
 
-class Proceed_Image
+class Proceed_Image : public QObject
 {
+    Q_OBJECT
 private:
     QTemporaryFile File[200];
     QString str,url;
     int ptr;
-//    QTemporaryFile *tempfile;
+    QNetworkAccessManager* NAM;
+    void GetFile(QString);
+    void Request(QUrl*);
 public:
     Proceed_Image();
-    void GetFile(QString, QTemporaryFile&);
     QString Proceed(QString);
     QString Proceed_NoImage(QString);
+private slots:
+//    void Save(QNetworkReply *);
 };
 
 #endif // PROCEED_IMAGE_H

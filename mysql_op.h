@@ -6,6 +6,7 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QDebug>
+#include <QObject>
 class MYSQL_OP
 {
 private:
