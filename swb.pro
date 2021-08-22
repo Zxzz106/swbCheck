@@ -1,4 +1,4 @@
-QT       += core gui sql network
+QT       += core gui sql network axcontainer
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,12 +12,14 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mysql_op.cpp \
-    proceed_image.cpp
+    proceed_image.cpp \
+    word_op.cpp
 
 HEADERS += \
     mainwindow.h \
     mysql_op.h \
-    proceed_image.h
+    proceed_image.h \
+    word_op.h
 
 FORMS += \
     mainwindow.ui

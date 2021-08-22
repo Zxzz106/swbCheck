@@ -26,7 +26,7 @@
    <string>生物宝查询</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QTabWidget" name="Tabs">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -36,9 +36,9 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
-    <widget class="QWidget" name="tab">
+    <widget class="QWidget" name="tab_S">
      <attribute name="title">
       <string>单题查询</string>
      </attribute>
@@ -48,7 +48,7 @@
         <x>10</x>
         <y>10</y>
         <width>300</width>
-        <height>30</height>
+        <height>35</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -60,10 +60,10 @@
       <widget class="QLineEdit" name="S_InputUID">
        <property name="geometry">
         <rect>
-         <x>110</x>
+         <x>105</x>
          <y>5</y>
          <width>70</width>
-         <height>20</height>
+         <height>25</height>
         </rect>
        </property>
        <property name="font">
@@ -72,6 +72,9 @@
          <pointsize>12</pointsize>
         </font>
        </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
       </widget>
       <widget class="QLabel" name="label">
        <property name="geometry">
@@ -79,13 +82,13 @@
          <x>5</x>
          <y>5</y>
          <width>100</width>
-         <height>20</height>
+         <height>25</height>
         </rect>
        </property>
        <property name="font">
         <font>
          <family>Arial</family>
-         <pointsize>12</pointsize>
+         <pointsize>13</pointsize>
         </font>
        </property>
        <property name="text">
@@ -98,8 +101,14 @@
          <x>180</x>
          <y>5</y>
          <width>40</width>
-         <height>20</height>
+         <height>25</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>10</pointsize>
+        </font>
        </property>
        <property name="text">
         <string>查询</string>
@@ -284,7 +293,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>打印预览</string>
+        <string>前往打印</string>
        </property>
       </widget>
       <widget class="QPushButton" name="S_CopyAnalysis">
@@ -315,7 +324,7 @@
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="tab_2">
+    <widget class="QWidget" name="tab_M">
      <attribute name="title">
       <string>批量查询</string>
      </attribute>
@@ -339,7 +348,7 @@
         <rect>
          <x>5</x>
          <y>5</y>
-         <width>140</width>
+         <width>260</width>
          <height>20</height>
         </rect>
        </property>
@@ -352,7 +361,7 @@
         </font>
        </property>
        <property name="text">
-        <string>在此处输入UID：</string>
+        <string>在此处输入UID(每行一个)：</string>
        </property>
       </widget>
       <widget class="QPushButton" name="M_Check">
@@ -520,10 +529,209 @@
         </rect>
        </property>
        <property name="text">
-        <string>打印预览</string>
+        <string>前往打印</string>
        </property>
       </widget>
-      <widget class="QTextBrowser" name="M_Analysis">
+      <widget class="QTextBrowser" name="M_Result">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>30</y>
+         <width>420</width>
+         <height>465</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>新宋体</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(249,249,249);
+border-width: 0px</string>
+       </property>
+       <property name="openExternalLinks">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_K">
+     <attribute name="title">
+      <string>关键词查询</string>
+     </attribute>
+     <widget class="QFrame" name="frame_6">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>320</width>
+        <height>521</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QLineEdit" name="K_Input">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>60</y>
+         <width>200</width>
+         <height>35</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="K_Question">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>160</y>
+         <width>200</width>
+         <height>35</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>题干包含关键词</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="K_Analysis">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>230</y>
+         <width>200</width>
+         <height>35</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>解析包含关键词</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="K_QA">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>280</y>
+         <width>200</width>
+         <height>35</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>题目或解析包含关键词</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>15</y>
+         <width>200</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>请在下方输入关键词：</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="K_IncludeChoice">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>200</y>
+         <width>190</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>是否包含选项中的关键词</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame_7">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>10</y>
+        <width>430</width>
+        <height>535</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QLabel" name="label_7">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>5</y>
+         <width>130</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>11</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>查询结果(UID)</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="K_GotoM">
+       <property name="geometry">
+        <rect>
+         <x>325</x>
+         <y>500</y>
+         <width>100</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>前往批量查询</string>
+       </property>
+      </widget>
+      <widget class="QTextBrowser" name="K_Result">
        <property name="geometry">
         <rect>
          <x>5</x>
@@ -557,7 +765,7 @@ border-width: 0px</string>
   </widget>
  </widget>
  <tabstops>
-  <tabstop>tabWidget</tabstop>
+  <tabstop>Tabs</tabstop>
   <tabstop>S_InputUID</tabstop>
   <tabstop>S_Check</tabstop>
   <tabstop>S_Question</tabstop>

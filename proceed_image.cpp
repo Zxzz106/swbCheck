@@ -8,8 +8,10 @@ Proceed_Image::Proceed_Image()
 void Proceed_Image::Request(QUrl* URL) {
     QTimer timer;
     QEventLoop eventloop;
+    delete NAM;
+    NAM=new QNetworkAccessManager(this);
     connect(&timer, &QTimer::timeout, [&eventloop] {eventloop.quit();});
-    connect(NAM, &QNetworkAccessManager::finished, [&eventloop](){eventloop.quit();});
+    connect(NAM, &QNetworkAccessManager::finished, [&eventloop](QNetworkReply*){eventloop.quit();});
     QNetworkReply* Reply=NAM->get(QNetworkRequest(*URL));
     timer.start(3000);
     eventloop.exec();
@@ -38,7 +40,7 @@ QString Proceed_Image::Proceed_WithImage(QString ostr, int width) {
         }
         if(ostr[i]=='>'&&b==1) {
             GetFile(url);
-            str+=QString("<br/><img src=\"")+File[ptr].fileName()+QString("\" alt=\"\" width="+QString::number(width-20)+" />");
+            str+=QString("<br/><img src=\"")+File[ptr].fileName()+QString("\" alt=\"\" width="+QString::number(width)+" />");
             ptr++;
             b=0;
             continue;

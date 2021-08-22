@@ -44,28 +44,23 @@ bool MYSQL_OP::Exists() {
     return Query.isValid();
 }
 QString MYSQL_OP::AquireStem() {
-    QSqlQuery Query(QString("SELECT stem FROM swb WHERE UID = ")+QString::number(UID)+QString(";"),db);
+    QSqlQuery Query(QString("SELECT stem FROM swb WHERE UID = ")+QString::number(UID),db);
     Query.next();
-//    qDebug()<<"AquireStem";
     return Query.value("stem").toString()+"<br/>";
 }
 QString MYSQL_OP::AquireChoices() {
     QSqlQuery Query(QString("SELECT answers FROM swb WHERE UID = ")+QString::number(UID),db);
     Query.next();
-//    qDebug()<<"AquireChoices";
     return Query.value("answers").toString();
 }
 QString MYSQL_OP::AquireAnalysis() {
     QSqlQuery Query(QString("SELECT analysis FROM swb WHERE UID = ")+QString::number(UID),db);
     Query.next();
-//    qDebug()<<"AquireAnalysis";
     return Query.value("analysis").toString()+"<br/>";
 }
 QString MYSQL_OP::AquireVideo() {
     QSqlQuery Query(QString("SELECT videoUrl FROM swb WHERE UID = ")+QString::number(UID),db);
     Query.next();
-//    qDebug()<<"AquireVideo";
-//    qDebug()<<Query.value("videoUrl").toString();
     return Query.value("videoUrl").toString();
 }
 QString MYSQL_OP::Aquire(int ID, int type) {
@@ -76,4 +71,32 @@ QString MYSQL_OP::Aquire(int ID, int type) {
     if(type&2) Res+=AquireChoices();
     if(type&4) Res+=AquireAnalysis();
     return Res;
+}
+void MYSQL_OP::AquireKeyFromStem(QString str, QVector<int>& Res) {
+    QSqlQuery Query(QString("SELECT UID FROM swb WHERE stem LIKE \'%"+str+"%\'"),db);
+    while (Query.next())
+        Res.push_back(Query.value("UID").toInt());
+}
+void MYSQL_OP::AquireKeyFromChoices(QString str,QVector<int>& Res) {
+    QSqlQuery Query(QString("SELECT UID FROM swb WHERE answers LIKE \'%"+str+"%\'"),db);
+    while (Query.next())
+        Res.push_back(Query.value("UID").toInt());
+}
+void MYSQL_OP::AquireKeyFromAnalysis(QString str,QVector<int>& Res) {
+    QSqlQuery Query(QString("SELECT UID FROM swb WHERE analysis LIKE \'%"+str+"%\'"),db);
+    while (Query.next())
+        Res.push_back(Query.value("UID").toInt());
+}
+QString MYSQL_OP::AquireKey(QString Keyword, int type) {
+    QVector<int> Res;
+    Res.clear();
+    if(type&1) AquireKeyFromStem(Keyword,Res);
+    if(type&2) AquireKeyFromChoices(Keyword,Res);
+    if(type&4) AquireKeyFromAnalysis(Keyword,Res);
+    std::sort(Res.begin(),Res.end());
+    Res.erase(std::unique(Res.begin(),Res.end()),Res.end());
+    Keyword.clear();
+    for(int i=0; i<Res.length(); i++)
+        Keyword+=QString::number(Res[i])+"<br/>";
+    return Keyword;
 }

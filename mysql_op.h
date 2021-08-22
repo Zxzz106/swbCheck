@@ -15,12 +15,16 @@ private:
     QString AquireStem();
     QString AquireChoices();
     QString AquireAnalysis();
+    void AquireKeyFromStem(QString,QVector<int>&);
+    void AquireKeyFromChoices(QString,QVector<int>&);
+    void AquireKeyFromAnalysis(QString,QVector<int>&);
 public:
     MYSQL_OP();
     void Connect();
     bool Exists();
     QString Aquire(int, int);
     QString AquireVideo();
+    QString AquireKey(QString,int);
 };
 
 #endif // MYSQL_OP_H

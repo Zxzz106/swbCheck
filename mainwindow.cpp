@@ -6,14 +6,34 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->S_InputUID->setFocus();
     ui->S_InputUID->setValidator(new QIntValidator(ui->S_InputUID));
     ID=new QVector<int>;
+    clip=QApplication::clipboard();
     StatusBarMessage = new QLabel;
+    temp= new QTextBrowser;
     StatusBarMessage -> setMinimumSize(StatusBarMessage -> sizeHint());
     StatusBarMessage -> setAlignment(Qt::AlignHCenter);
     connect(ui->S_Check,&QPushButton::clicked,this,&MainWindow::CheckS);
     connect(ui->S_InputUID, &QLineEdit::returnPressed, this, &MainWindow::CheckS);
     connect(ui->M_Check, &QPushButton::clicked, this, &MainWindow::CheckM);
+    ui->M_Check->setShortcut(Qt::Key_F5);
+    connect(ui->S_CopyStem,&QPushButton::clicked,this,&MainWindow::CopyStem);
+    connect(ui->S_CopyChoice,&QPushButton::clicked,this,&MainWindow::CopyChoice);
+    connect(ui->S_CopyBoth,&QPushButton::clicked,this,&MainWindow::CopyBoth);
+    connect(ui->S_CopyAnalysis,&QPushButton::clicked,this,&MainWindow::CopyAnalysis);
+    connect(ui->M_Copy,&QPushButton::clicked,this,&MainWindow::CopyM);
+    connect(ui->K_Question,&QPushButton::clicked,this,&MainWindow::Check_K_Question);
+    connect(ui->K_Analysis,&QPushButton::clicked,this,&MainWindow::Check_K_Analysis);
+    connect(ui->K_QA,&QPushButton::clicked,this,&MainWindow::Check_K_QA);
+    connect(ui->K_Input,&QLineEdit::returnPressed, this, &MainWindow::Check_K_Question);
+    connect(ui->K_GotoM,&QPushButton::clicked,this,&MainWindow::GotoM);
+    connect(ui->S_InputUID,&QLineEdit::textEdited,this,&MainWindow::SetS_Input_Color);
+    connect(ui->M_InputUID,&QPlainTextEdit::textChanged,this,&MainWindow::SetM_Input_Color);
+    ui->S_InputUID->setStyleSheet("color:#a9a9a9");
+    ui->S_InputUID->setPlaceholderText("12345");
+    ui->M_InputUID->setStyleSheet("color:#a9a9a9");
+    ui->M_InputUID->setPlaceholderText("12345\n12346\n12356\n12456\n13456\n23456");
 }
 
 MainWindow::~MainWindow()
@@ -36,50 +56,148 @@ void MainWindow::SetS_Analysis(const QString& str) {
     ui->S_Analysis->setText(str);
 }
 
-void MainWindow::SetM_Analysis(const QString& str) {
-    ui->M_Analysis->insertHtml(str);
+void MainWindow::SetM_Result(const QString& str) {
+    ui->M_Result->insertHtml(str);
 }
 
-void MainWindow::CheckSingle(int UID, MainWindow* w, MYSQL_OP* db, Proceed_Image* proi)
+void MainWindow::SetK_Result(const QString& str) {
+    ui->K_Result->setText(str);
+}
+
+void MainWindow::CheckSingle(MainWindow* w, MYSQL_OP* db, Proceed_Image* proi)
 {
-    w->SetS_Question(proi->Proceed(db->Aquire(UID,3),7,290));
-    w->SetS_Analysis(proi->Proceed(db->Aquire(UID,4),7,420));
+    w->SetS_Question(proi->Proceed(db->Aquire(UID,3),7,280));
+    w->SetS_Analysis(proi->Proceed(db->Aquire(UID,4),7,400));
     SendStatusBar("查询完成");
 }
 
+void MainWindow::PlayVideo() {
+    QDesktopServices::openUrl(VideoURL);
+}
+
 void MainWindow::CheckS() {
-    int UID=ui->S_InputUID->text().toInt();
-    CheckSingle(UID,w,db,proi);
+    ui->S_Check->setCheckable(false);
+    ui->S_Check->setEnabled(false);
+    disconnect(ui->S_InputUID, &QLineEdit::returnPressed, this, &MainWindow::CheckS);
+    UID=ui->S_InputUID->text().toInt();
+    CheckSingle(w,db,proi);
     if(db->Exists()) {
         QString str=db->AquireVideo();
-        if(str==(QString)"") {
+        if(str==(QString)"")
             ui->S_PlayVideo->setEnabled(false);
-            return;
+        else {
+            ui->S_PlayVideo->setEnabled(true);
+            VideoURL=QUrl(str);
+            connect(ui->S_PlayVideo,&QPushButton::clicked,this,&MainWindow::PlayVideo);
         }
-        ui->S_PlayVideo->setEnabled(true);
     }
     else ui->S_PlayVideo->setEnabled(false);
+    connect(ui->S_InputUID, &QLineEdit::returnPressed, this, &MainWindow::CheckS);
+    ui->S_Check->setEnabled(true);
+    ui->S_Check->setCheckable(true);
 }
 
 void MainWindow::CheckMultiple(QVector<int>* ID, int type, MainWindow* w, MYSQL_OP* db, Proceed_Image* proi) {
     for(int i=0; i<ID->length(); i++) {
         int UID=ID->at(i);
-        w->SetM_Analysis("("+QString::number(UID)+")<br/>"+proi->Proceed(db->Aquire(UID,type),type,420));
+        if(i==0) w->SetM_Result("<b><font color=\"#adabfc\">("+QString::number(UID)+")</font></b><br/>"+proi->Proceed(db->Aquire(UID,type),type,390));
+        else w->SetM_Result("<br/><b><font color=\"#adabfc\">("+QString::number(UID)+")</font></b><br/>"+proi->Proceed(db->Aquire(UID,type),type,390));
         SendStatusBar("已查询"+QString::number(i+1)+"/"+QString::number(ID->length())+"个");
     }
     SendStatusBar("查询完成");
 }
 
 void MainWindow::CheckM() {
-    ui->M_Analysis->clear();
+    ui->M_Check->setCheckable(false);
+    ui->M_Check->setEnabled(false);
+    ui->M_Result->clear();
+    ID->clear();
     QTextDocument* Doc;
     Doc=ui->M_InputUID->document();
-    for(QTextBlock it=Doc->begin(); it!=Doc->end(); it=it.next())
+    for(QTextBlock it=Doc->begin(); it!=Doc->end(); it=it.next()) {
         ID->push_back(it.text().toInt());
+        if(ID->back()==0) ID->pop_back();
+    }
     int type=0;
     if(ui->checkBox_Stem->isChecked()) type+=1;
     if(ui->checkBox_Choice->isChecked()) type+=2;
     if(ui->checkBox_Analysis->isChecked()) type+=4;
     if(ui->checkBox_Image->isChecked()) type+=8;
     CheckMultiple(ID,type,w,db,proi);
+    ui->M_Check->setEnabled(true);
+    ui->M_Check->setCheckable(true);
+}
+
+void MainWindow::CopyStem() {
+    temp->setText(proi->Proceed(db->Aquire(UID,1),7,280));
+    temp->selectAll();
+    temp->copy();
+    ui->S_InputUID->setFocus();
+    SendStatusBar("复制成功(题干)");
+}
+
+void MainWindow::CopyChoice() {
+    temp->setText(proi->Proceed(db->Aquire(UID,2),7,400));
+    temp->selectAll();
+    temp->copy();
+    ui->S_InputUID->setFocus();
+    SendStatusBar("复制成功(选项)");
+}
+
+void MainWindow::CopyBoth() {
+    ui->S_Question->selectAll();
+    ui->S_Question->copy();
+    QTextCursor cursor=ui->S_Question->textCursor();
+    cursor.movePosition(QTextCursor::End);
+    ui->S_Question->setTextCursor(cursor);
+    ui->S_InputUID->setFocus();
+    ui->S_InputUID->setFocus();
+    SendStatusBar("复制成功(题面)");
+}
+
+void MainWindow::CopyAnalysis() {
+    ui->S_Analysis->selectAll();
+    ui->S_Analysis->copy();
+    QTextCursor cursor=ui->S_Analysis->textCursor();
+    cursor.movePosition(QTextCursor::End);
+    ui->S_Analysis->setTextCursor(cursor);
+    ui->S_InputUID->setFocus();
+    SendStatusBar("复制成功(解析)");
+}
+
+void MainWindow::CopyM() {
+    ui->M_Result->selectAll();
+    ui->M_Result->copy();
+    ui->M_InputUID->setFocus();
+    SendStatusBar("复制成功(查询结果)");
+}
+
+void MainWindow::Check_K_Question() {
+    SetK_Result(db->AquireKey(ui->K_Input->text(),1+(ui->K_IncludeChoice->isChecked()?2:0)));
+    SendStatusBar("查询完成");
+}
+
+void MainWindow::Check_K_Analysis() {
+    SetK_Result(db->AquireKey(ui->K_Input->text(),4));
+    SendStatusBar("查询完成");
+}
+
+void MainWindow::Check_K_QA() {
+    SetK_Result(db->AquireKey(ui->K_Input->text(),7));
+    SendStatusBar("查询完成");
+}
+
+void MainWindow::GotoM() {
+    ui->M_InputUID->setPlainText(ui->K_Result->toPlainText());
+    ui->Tabs->setCurrentIndex(1);
+}
+
+void MainWindow::SetS_Input_Color() {
+    ui->S_InputUID->setStyleSheet("color:#000000");
+    ui->S_InputUID->setPlaceholderText("");
+}
+
+void MainWindow::SetM_Input_Color() {
+    ui->M_InputUID->setStyleSheet("color:#000000");
+    ui->M_InputUID->setPlaceholderText("");
 }
