@@ -72,31 +72,29 @@ QString MYSQL_OP::Aquire(int ID, int type) {
     if(type&4) Res+=AquireAnalysis();
     return Res;
 }
-void MYSQL_OP::AquireKeyFromStem(QString str, QVector<int>& Res) {
+void MYSQL_OP::AquireKeyFromStem(QString str, std::set<int>& Res) {
     QSqlQuery Query(QString("SELECT UID FROM swb WHERE stem LIKE \'%"+str+"%\'"),db);
     while (Query.next())
-        Res.push_back(Query.value("UID").toInt());
+        Res.insert(Query.value("UID").toInt());
 }
-void MYSQL_OP::AquireKeyFromChoices(QString str,QVector<int>& Res) {
+void MYSQL_OP::AquireKeyFromChoices(QString str,std::set<int>& Res) {
     QSqlQuery Query(QString("SELECT UID FROM swb WHERE answers LIKE \'%"+str+"%\'"),db);
     while (Query.next())
-        Res.push_back(Query.value("UID").toInt());
+        Res.insert(Query.value("UID").toInt());
 }
-void MYSQL_OP::AquireKeyFromAnalysis(QString str,QVector<int>& Res) {
+void MYSQL_OP::AquireKeyFromAnalysis(QString str,std::set<int>& Res) {
     QSqlQuery Query(QString("SELECT UID FROM swb WHERE analysis LIKE \'%"+str+"%\'"),db);
     while (Query.next())
-        Res.push_back(Query.value("UID").toInt());
+        Res.insert(Query.value("UID").toInt());
 }
 QString MYSQL_OP::AquireKey(QString Keyword, int type) {
-    QVector<int> Res;
+    std::set<int> Res;
     Res.clear();
     if(type&1) AquireKeyFromStem(Keyword,Res);
     if(type&2) AquireKeyFromChoices(Keyword,Res);
     if(type&4) AquireKeyFromAnalysis(Keyword,Res);
-    std::sort(Res.begin(),Res.end());
-    Res.erase(std::unique(Res.begin(),Res.end()),Res.end());
     Keyword.clear();
-    for(int i=0; i<Res.length(); i++)
-        Keyword+=QString::number(Res[i])+"<br/>";
+    for(int it:Res)
+        Keyword+=QString::number(it)+"<br/>";
     return Keyword;
 }

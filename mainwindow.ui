@@ -36,7 +36,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_S">
      <attribute name="title">
@@ -283,7 +283,7 @@
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QPushButton" name="S_PrintPreview">
+      <widget class="QPushButton" name="S_Print">
        <property name="geometry">
         <rect>
          <x>325</x>
@@ -294,6 +294,9 @@
        </property>
        <property name="text">
         <string>前往打印</string>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
        </property>
       </widget>
       <widget class="QPushButton" name="S_CopyAnalysis">
@@ -519,7 +522,7 @@
         <string>复制</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="M_PrintPreview">
+      <widget class="QPushButton" name="M_Print">
        <property name="geometry">
         <rect>
          <x>325</x>
@@ -775,7 +778,7 @@ border-width: 0px</string>
   <tabstop>S_Analysis</tabstop>
   <tabstop>S_PlayVideo</tabstop>
   <tabstop>S_CopyAnalysis</tabstop>
-  <tabstop>S_PrintPreview</tabstop>
+  <tabstop>S_Print</tabstop>
   <tabstop>M_InputUID</tabstop>
   <tabstop>checkBox_Stem</tabstop>
   <tabstop>checkBox_Choice</tabstop>
@@ -783,7 +786,7 @@ border-width: 0px</string>
   <tabstop>checkBox_Image</tabstop>
   <tabstop>M_Check</tabstop>
   <tabstop>M_Copy</tabstop>
-  <tabstop>M_PrintPreview</tabstop>
+  <tabstop>M_Print</tabstop>
  </tabstops>
  <resources/>
  <connections/>

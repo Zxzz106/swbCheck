@@ -8,8 +8,11 @@
 #include <QDesktopServices>
 #include <QClipboard>
 #include <QTextBrowser>
+#include <QProcess>
+#include <QAction>
 #include "mysql_op.h"
 #include "proceed_image.h"
+#include "word_op.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,8 +26,6 @@ public:
     MainWindow* w;
     MYSQL_OP* db;
     Proceed_Image* proi;
-    QVector<int>* ID;
-    QClipboard* clip;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void SendStatusBar(QString);
@@ -35,11 +36,16 @@ public:
 private:
     Ui::MainWindow *ui;
     QLabel *StatusBarMessage;
+    QVector<int>* ID;
     QTextBrowser *temp;
     QUrl VideoURL;
+    Word_OP* Printer;
+    QAction* Shortcut;
+    QProcess cli;
     int UID;
     void CheckSingle(MainWindow*, MYSQL_OP*, Proceed_Image*);
     void CheckMultiple(QVector<int>*, int, MainWindow*, MYSQL_OP*, Proceed_Image*);
+    QString GetPrinthtml(QString);
 private slots:
     void CheckS();
     void CheckM();
@@ -55,5 +61,8 @@ private slots:
     void GotoM();
     void SetS_Input_Color();
     void SetM_Input_Color();
+    void PrintS();
+    void PrintM();
+    void Print();
 };
 #endif // MAINWINDOW_H

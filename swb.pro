@@ -1,4 +1,5 @@
-QT       += core gui sql network axcontainer
+QT       += core gui sql network
+#QT += axcontainer
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,3 +29,12 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    icon.qrc
+
+DISTFILES += \
+    icon.ico \
+    icon.rc
+
+RC_FILE += icon.rc

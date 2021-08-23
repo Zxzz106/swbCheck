@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>fdroid.png</file>
+    </qresource>
+    <qresource prefix="/"/>
+</RCC>

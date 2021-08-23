@@ -7,6 +7,8 @@
 #include <QSqlRecord>
 #include <QDebug>
 #include <QObject>
+#include <set>
+
 class MYSQL_OP
 {
 private:
@@ -15,9 +17,9 @@ private:
     QString AquireStem();
     QString AquireChoices();
     QString AquireAnalysis();
-    void AquireKeyFromStem(QString,QVector<int>&);
-    void AquireKeyFromChoices(QString,QVector<int>&);
-    void AquireKeyFromAnalysis(QString,QVector<int>&);
+    void AquireKeyFromStem(QString,std::set<int>&);
+    void AquireKeyFromChoices(QString,std::set<int>&);
+    void AquireKeyFromAnalysis(QString,std::set<int>&);
 public:
     MYSQL_OP();
     void Connect();
