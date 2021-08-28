@@ -6,6 +6,7 @@
 #include <QCoreApplication>
 #include <QMessageBox>
 #include <QStandardPaths>
+#include <QTextStream>
 
 class Word_OP : public QObject
 {

@@ -1,4 +1,4 @@
-#include "mysql_op.h"
+﻿#include "mysql_op.h"
 
 MYSQL_OP::MYSQL_OP()
 {
