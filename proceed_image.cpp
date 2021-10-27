@@ -1,4 +1,4 @@
-#include "proceed_image.h"
+﻿#include "proceed_image.h"
 
 Proceed_Image::Proceed_Image()
 {
@@ -10,18 +10,24 @@ void Proceed_Image::Request(QUrl* URL) {
     QEventLoop eventloop;
     delete NAM;
     NAM=new QNetworkAccessManager(this);
-    connect(&timer, &QTimer::timeout, [&eventloop] {eventloop.quit();});
-    connect(NAM, &QNetworkAccessManager::finished, [&eventloop](QNetworkReply*){eventloop.quit();});
+    bool res;
+    connect(&timer, &QTimer::timeout, [&eventloop, &res] {eventloop.quit(); res=0;});
+    connect(NAM, &QNetworkAccessManager::finished, [&eventloop, &res](QNetworkReply*){eventloop.quit(); res=1;});
     QNetworkReply* Reply=NAM->get(QNetworkRequest(*URL));
     timer.start(3000);
     eventloop.exec();
-    if(Reply->error() == QNetworkReply::NoError)
-    {
-        QByteArray Bytes = Reply->readAll();
-        QPixmap Img;
-        Img.loadFromData(Bytes);
-        File[ptr].open();
-        Img.save(&File[ptr],"png");
+    if(res) {
+        if(Reply->error() == QNetworkReply::NoError) {
+            QByteArray Bytes = Reply->readAll();
+            QPixmap Img;
+            Img.loadFromData(Bytes);
+            File[ptr].open();
+            Img.save(&File[ptr],"png");
+        } else {
+            //网络错误
+        }
+    } else {
+        //连接超时
     }
     Reply->deleteLater();
 }
